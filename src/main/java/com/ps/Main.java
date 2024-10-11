@@ -1,10 +1,11 @@
 package com.ps;
 
 import java.util.Scanner;
-
+import java.util.ArrayList;
 public class Main {
 
     static Scanner commandScanner = new Scanner(System.in);
+     ArrayList<Transaction> transactions = new ArrayList<>();
 
     public static void main(String[] args) {
         // loadLedgerFile(); <-- this will load the files as soon as the app is ran, if i dont then option 3 will be empty
@@ -14,7 +15,9 @@ public class Main {
             System.out.println("1) to Add Deposit");
             System.out.println("2) to  Make Payment(debit)");
             System.out.println("3) to Display Ledger");
-            System.out.println("Command: ");
+            System.out.println("0) to exit application");
+
+            System.out.print("Command: ");
             mainMenuCommand = commandScanner.nextInt();
 
             switch(mainMenuCommand){
@@ -46,6 +49,67 @@ public class Main {
     }
 
     public static void displayLedger(){
-        System.out.println("display ledger test. . .");
+        int subMenuCommand;
+        do{
+            System.out.println("1) to display all");
+            System.out.println("2) to display deposits");
+            System.out.println("3) to display payments");
+            System.out.println("4) to navigate to reports");
+            System.out.println("0) to return to main menu");
+
+            System.out.print("Command: ");
+            subMenuCommand = commandScanner.nextInt();
+
+            switch(subMenuCommand){
+                case 1:
+                    displayAll();
+                    break;
+                case 2:
+                    displayDeposits();
+                    break;
+                case 3:
+                    displayPayments();
+                    break;
+                case 4:
+                    reportsMenu();
+                    break;
+                case 0:
+                    System.out.println("Returning to main menu");
+                    break;
+                default:
+                    System.out.println("Invalid Command. . .");
+            }
+        }while(subMenuCommand != 0);
+
     }
+
+    public static void displayAll(){
+        System.out.println("display all testing");
+    }
+    public static void displayDeposits(){
+        System.out.println("Display deposits testing");
+    }
+    public static void displayPayments(){
+        System.out.println("display payments testing");
+    }
+    public static void reportsMenu(){
+
+        int reportsMenuCommand;
+        do{
+            System.out.println("1) for to display Month to Date");
+            System.out.println("2) to display previous month transactions");
+            System.out.println("3) to display year to date transactions");
+            System.out.println("4) to display previous Year transactions");
+            System.out.println("5) to search transactions by vendor");
+
+            System.out.print("Command: ");
+            reportsMenuCommand = commandScanner.nextInt();
+
+
+
+
+        } while(reportsMenuCommand != 0);
+    }
+
+
 }
