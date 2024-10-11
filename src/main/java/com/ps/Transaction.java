@@ -2,6 +2,7 @@ package com.ps;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class Transaction {
     private String description;
@@ -10,7 +11,7 @@ public class Transaction {
     private LocalDate date;
     private LocalTime time;
 
-    public Transaction(String description, String vendor, double amount, LocalDate date, LocalTime time) {
+    public Transaction(LocalDate date, LocalTime time, String description, String vendor, double amount) {
         this.description = description;
         this.vendor = vendor;
         this.amount = amount;
