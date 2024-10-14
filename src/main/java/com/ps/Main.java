@@ -3,6 +3,7 @@ package com.ps;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 public class Main {
 
     static Scanner commandScanner = new Scanner(System.in);
+    static Scanner inputScanner = new Scanner(System.in);
    static  ArrayList<Transaction> transactions = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -68,6 +70,7 @@ public class Main {
 
                  transactions.add(transaction);
             }
+            bufferedReader.close();
         } catch(Exception e){
 
             e.printStackTrace();
@@ -76,10 +79,94 @@ public class Main {
 
     public static void addDeposit() {
         System.out.println("Adding deposit test. . .");
+        try {
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            //DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm:ss");
+
+
+            // prompt user for date
+            System.out.print("Enter the date of the payment in yyyy-mm-dd format: ");
+            String paymentDate = inputScanner.nextLine();
+            LocalDate date = LocalDate.parse(paymentDate, dateFormatter);
+
+            // prompt user for time of payment
+            System.out.print("Enter the time of the payments in hh:mm:ss format: ");
+            String timeOfPayment = inputScanner.nextLine();
+            LocalTime time = LocalTime.parse(timeOfPayment);
+
+            // promt user for transaction description
+            System.out.println("Enter the description of transaction: ");
+            String description = inputScanner.nextLine();
+
+            System.out.print("Enter the name of the vendor: ");
+            String vendorName = inputScanner.nextLine();
+
+            System.out.println("Enter the amount of the transaction: ");
+            double transactionAmount = inputScanner.nextDouble();
+            inputScanner.nextLine();
+            Transaction transaction = new Transaction(date, time, description, vendorName, transactionAmount);
+            transactions.add(transaction);
+
+
+
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions.csv", true));
+            bufferedWriter.write("\n" + transaction.getDate() + "|" + transaction.getTime() + "|" + transaction.getDescription() + "|" + transaction.getVendor() + "|" + transaction.getAmount());
+
+
+            bufferedWriter.close();
+
+        } catch(Exception e ){
+            System.out.println("invalid command, select an option. . .");
+        }
     }
 
     public static void makePayment() {
-        System.out.println("make payment test. . .");
+
+        try {
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            //DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm:ss");
+            System.out.println("make payment test. . .");
+
+            // prompt user for date
+            System.out.print("Enter the date of the payment in yyyy-mm-dd format: ");
+            String paymentDate = inputScanner.nextLine();
+            LocalDate date = LocalDate.parse(paymentDate, dateFormatter);
+
+            // prompt user for time of payment
+            System.out.print("Enter the time of the payments in hh:mm:ss format: ");
+            String timeOfPayment = inputScanner.nextLine();
+            LocalTime time = LocalTime.parse(timeOfPayment);
+
+            // promt user for transaction description
+            System.out.println("Enter the description of transaction: ");
+            String description = inputScanner.nextLine();
+
+            System.out.print("Enter the name of the vendor: ");
+            String vendorName = inputScanner.nextLine();
+
+            System.out.println("Enter the amount of the transaction: ");
+            double transactionAmount = inputScanner.nextDouble();
+            double amount = -transactionAmount; // turning the amount negative
+            inputScanner.nextLine();
+            Transaction transaction = new Transaction(date, time, description, vendorName, amount);
+            transactions.add(transaction);
+
+
+
+                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions.csv", true));
+                bufferedWriter.write("\n" + transaction.getDate() + "|" + transaction.getTime() + "|" + transaction.getDescription() + "|" + transaction.getVendor() + "|" + transaction.getAmount());
+
+
+                bufferedWriter.close();
+
+        } catch(Exception e ){
+            System.out.println("invalid command, select an option. . .");
+        }
+
+
+
+
+
     }
 
     public static void displayLedger() {
@@ -118,12 +205,14 @@ public class Main {
     }
 
     public static void displayAll() {
+        // need to display newest entries first To Do
         DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm:ss");
         for(int i = 0; i < transactions.size(); i++){
 
             Transaction t = transactions.get(i);
-            System.out.print(t.getDate() + " |" +   t.getTime().format(timeFormat) + " |" + t.getDescription() + " |" + t.getVendor() + " |" + t.getAmount() + "\n");
+            System.out.print(t.getDate() + " | " +   t.getTime().format(timeFormat) + " | " + t.getDescription() + " | " + t.getVendor() + " | " + t.getAmount() + "\n");
         }
+        System.out.println("\n");
     }
 
     public static void displayDeposits() {
