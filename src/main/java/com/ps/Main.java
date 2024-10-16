@@ -81,19 +81,18 @@ public class Main {
     }
 
     public static void addDeposit() {
-        System.out.println("Adding deposit test. . .");
         try {
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             //DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm:ss");
 
 
             // prompt user for date
-            System.out.print("Enter the date of the payment in yyyy-mm-dd format: ");
+            System.out.print("Enter the date of the payment in yyyy-mm-dd format(include leading zeros): ");
             String paymentDate = inputScanner.nextLine();
             LocalDate date = LocalDate.parse(paymentDate, dateFormatter);
 
             // prompt user for time of payment
-            System.out.print("Enter the time of the payments in hh:mm:ss format: ");
+            System.out.print("Enter the time of the payments in hh:mm:ss format(include leading zeros): ");
             String timeOfPayment = inputScanner.nextLine();
             LocalTime time = LocalTime.parse(timeOfPayment);
 
@@ -104,7 +103,7 @@ public class Main {
             System.out.print("Enter the name of the vendor: ");
             String vendorName = inputScanner.nextLine();
 
-            System.out.print("Enter the amount of the transaction: ");
+            System.out.print("Enter the amount of the transaction:$");
             double transactionAmount = inputScanner.nextDouble();
             inputScanner.nextLine();
             Transaction transaction = new Transaction(date, time, description, vendorName, transactionAmount);
@@ -112,12 +111,7 @@ public class Main {
 
 
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions.csv", true));
-            bufferedWriter.write("\n"
-                    + transaction.getDate() + "|"
-                    + transaction.getTime() + "|"
-                    + transaction.getDescription()
-                    + "|" + transaction.getVendor()
-                    + "|" + transaction.getAmount());
+            bufferedWriter.write("\n" + transaction.getDate() + "|" + transaction.getTime() + "|" + transaction.getDescription() + "|" + transaction.getVendor() + "|" + transaction.getAmount());
 
 
             bufferedWriter.close();
@@ -135,12 +129,12 @@ public class Main {
             System.out.println("make payment test. . .");
 
             // prompt user for date
-            System.out.print("Enter the date of the payment in yyyy-mm-dd format: ");
+            System.out.print("Enter the date of the payment in yyyy-mm-dd format(include leading zeros): ");
             String paymentDate = inputScanner.nextLine();
             LocalDate date = LocalDate.parse(paymentDate, dateFormatter);
 
             // prompt user for time of payment
-            System.out.print("Enter the time of the payments in hh:mm:ss format: ");
+            System.out.print("Enter the time of the payments in hh:mm:ss format(include leading zeros): ");
             String timeOfPayment = inputScanner.nextLine();
             LocalTime time = LocalTime.parse(timeOfPayment);
 
@@ -151,7 +145,7 @@ public class Main {
             System.out.print("Enter the name of the vendor: ");
             String vendorName = inputScanner.nextLine();
 
-            System.out.println("Enter the amount of the transaction: ");
+            System.out.println("Enter the amount of the transaction:$");
             double transactionAmount = inputScanner.nextDouble();
             double amount = -transactionAmount; // turning the amount negative
             inputScanner.nextLine();
@@ -160,12 +154,7 @@ public class Main {
 
 
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("transactions.csv", true));
-            bufferedWriter.write("\n"
-                    + transaction.getDate()
-                    + "|" + transaction.getTime()
-                    + "|" + transaction.getDescription()
-                    + "|" + transaction.getVendor() + "|"
-                    + transaction.getAmount());
+            bufferedWriter.write("\n" + transaction.getDate() + "|" + transaction.getTime() + "|" + transaction.getDescription() + "|" + transaction.getVendor() + "|" + transaction.getAmount());
 
 
             bufferedWriter.close();
@@ -228,11 +217,7 @@ public class Main {
         System.out.println("Display Deposits. . .\n");
         for (Transaction t : transactions) {
             if (t.getAmount() > 0) {
-                System.out.print(
-                        t.getDate() + " | "
-                                + t.getTime().format(timeFormat) + " | "
-                                + t.getDescription() + " | " + t.getVendor() + " | "
-                                + t.getAmount() + "\n");
+                System.out.print(t.getDate() + " | " + t.getTime().format(timeFormat) + " | " + t.getDescription() + " | " + t.getVendor() + " | " + t.getAmount() + "\n");
             }
         }
     }
@@ -242,10 +227,7 @@ public class Main {
         DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm:ss");
         for (Transaction t : transactions) {
             if (t.getAmount() < 0) {
-                System.out.print(t.getDate() + " | "
-                        + t.getTime().format(timeFormat) + " | "
-                        + t.getDescription() + " | " + t.getVendor() + " | "
-                        + t.getAmount() + "\n");
+                System.out.print(t.getDate() + " | " + t.getTime().format(timeFormat) + " | " + t.getDescription() + " | " + t.getVendor() + " | " + t.getAmount() + "\n");
             }
         }
     }
@@ -258,7 +240,7 @@ public class Main {
             System.out.println("2) to display previous month transactions");
             System.out.println("3) to display year to date transactions");
             System.out.println("4) to display previous Year transactions");
-            System.out.println("5) to search transactions by vendor");
+            System.out.println("5) to search menu");
             System.out.println("0) to exit to ledger menu. . .");
 
             System.out.print("Command: ");
@@ -278,7 +260,7 @@ public class Main {
                     displayPreviousYear();
                     break;
                 case 5:
-                    searchByVendor();
+                    searchMenu();
                     break;
                 case 0:
                     System.out.println("Returning to ledger menu");
@@ -292,12 +274,13 @@ public class Main {
     }
 
     public static void displayMonthToDate() {
-        // SimpleDateFormat monthFormat = new SimpleDateFormat("M");
+        System.out.println("Displaying month to date transactions. . .");
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm:ss");
         LocalDate currentDate = LocalDate.now();
         LocalDate firstDayOfMonth = currentDate.withDayOfMonth(1);
         for (Transaction t : transactions) {
             if (t.getDate().isAfter(firstDayOfMonth) && t.getDate().isBefore(currentDate)) {
-                System.out.println(t);
+                System.out.print(t.getDate() + " | " + t.getTime().format(timeFormat) + " | " + t.getDescription() + " | " + t.getVendor() + " | " + t.getAmount() + "\n");
 
             }
         }
@@ -307,13 +290,14 @@ public class Main {
 
 
     public static void displayPreviousMonth() {
-        System.out.println("Display previous month");
+        System.out.println("Displaying previous month transactions. . .\n");
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm:ss");
         LocalDate currentDate = LocalDate.now();
         LocalDate firstDayOfMonth = currentDate.withDayOfMonth(1);
         LocalDate previousMonth = currentDate.minusMonths(1);
         for (Transaction t : transactions) {
             if (t.getDate().isAfter(previousMonth) && t.getDate().isBefore(firstDayOfMonth)) {
-                System.out.println(t);
+                System.out.print(t.getDate() + " | " + t.getTime().format(timeFormat) + " | " + t.getDescription() + " | " + t.getVendor() + " | " + t.getAmount() + "\n");
             }
         }
 
@@ -321,7 +305,8 @@ public class Main {
     }
 
     public static void displayYearToDate() {
-        System.out.println("Display year to date");
+        System.out.println("Displaying year to date");
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm:ss");
         LocalDate currentDate = LocalDate.now();
         // FIRST day of year
         LocalDate firstDayOfYear = currentDate.withDayOfYear(1);
@@ -329,7 +314,7 @@ public class Main {
         //LocalDate year = currentYear.minusYears(1);
         for (Transaction t : transactions) {
             if (t.getDate().isAfter(firstDayOfYear) && t.getDate().isBefore(currentYear)) {
-                System.out.println(t);
+                System.out.print(t.getDate() + " | " + t.getTime().format(timeFormat) + " | " + t.getDescription() + " | " + t.getVendor() + " | " + t.getAmount() + "\n");
 
             }
         }
@@ -340,29 +325,76 @@ public class Main {
     public static void displayPreviousYear() {
         System.out.println("Display previous year");
         LocalDate currentDate = LocalDate.now();
-        // FIRST day of year
-
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm:ss");
         LocalDate currentYear = currentDate.withYear(currentDate.getYear());
         LocalDate year = currentYear.minusYears(1);
         LocalDate lastYearsFirstDay = year.withDayOfYear(1);
         LocalDate lastYearsLastDay = year.withDayOfYear(365);
-//        System.out.println(currentYear);
-//        System.out.println(year);
-//        System.out.println(lastYearsFirstDay);
-//        System.out.println(lastYearsLastDay);
 
         for (Transaction t : transactions) {
             if (t.getDate().isAfter(lastYearsFirstDay) && t.getDate().isBefore(lastYearsLastDay)) {
-                System.out.println(t);
+                System.out.print(t.getDate() + " | " + t.getTime().format(timeFormat) + " | " + t.getDescription() + " | " + t.getVendor() + " | " + t.getAmount() + "\n");
             }
         }
 
     }
 
-    public static void searchByVendor() {
-        System.out.println("Display search by vendor");
+    public static void searchMenu() {
+       int vendorCommand;
+
+       do{
+           System.out.println("1) to search by vendor");
+           System.out.println("2) for custom search");
+           System.out.println("0) to return to reports menu");
+
+           System.out.print("command:");
+           vendorCommand = commandScanner.nextInt();
+
+           switch(vendorCommand){
+               case 1:
+                   searchByVendor();
+                   break;
+               case 2:
+                   customSearch();
+                   break;
+               case 0:
+                   System.out.println("returning to reports menu");
+               default:
+                   System.out.println("Invalid command. . . ");
+           }
+
+       } while(vendorCommand != 0);
+
+
+    }
+    public static void searchByVendor(){
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm:ss");
+        ArrayList<String> vendors = new ArrayList<>();
+        for (Transaction t : transactions) {
+            if (!vendors.contains(t.getVendor())) {
+                vendors.add(t.getVendor());
+            }
+        }
+        System.out.println("Here are our vendors. . .");
+        for(String v : vendors){
+            System.out.print(v + "|" +"\n");
+        }
+
+            System.out.println("To search for vendor transactions, enter the vendor name");
+            String vendorName = inputScanner.nextLine();
+
+            for (Transaction t : transactions) {
+                if (vendorName.equalsIgnoreCase(t.getVendor())) {
+                    System.out.print(t.getDate() + " | " + t.getTime().format(timeFormat) + " | " + t.getDescription() + " | " + t.getVendor() + " | " + t.getAmount() + "\n");
+                }
+            }
+
+    }
+    public static void customSearch(){
+        System.out.println("testing custom search");
     }
 
-    // get more familiar with hashmaps
-    // see if i can figure out how to filter through the bonus challenges
+
+
+
 }
