@@ -145,7 +145,7 @@ public class Main {
             System.out.print("Enter the name of the vendor: ");
             String vendorName = inputScanner.nextLine();
 
-            System.out.println("Enter the amount of the transaction:$");
+            System.out.print("Enter the amount of the transaction:$");
             double transactionAmount = inputScanner.nextDouble();
             double amount = -transactionAmount; // turning the amount negative
             inputScanner.nextLine();
@@ -340,34 +340,35 @@ public class Main {
     }
 
     public static void searchMenu() {
-       int vendorCommand;
+        int vendorCommand;
 
-       do{
-           System.out.println("1) to search by vendor");
-           System.out.println("2) for custom search");
-           System.out.println("0) to return to reports menu");
+        do {
+            System.out.println("1) to search by vendor");
+            System.out.println("2) for custom search");
+            System.out.println("0) to return to reports menu");
 
-           System.out.print("command:");
-           vendorCommand = commandScanner.nextInt();
+            System.out.print("command:");
+            vendorCommand = commandScanner.nextInt();
 
-           switch(vendorCommand){
-               case 1:
-                   searchByVendor();
-                   break;
-               case 2:
-                   customSearch();
-                   break;
-               case 0:
-                   System.out.println("returning to reports menu");
-               default:
-                   System.out.println("Invalid command. . . ");
-           }
+            switch (vendorCommand) {
+                case 1:
+                    searchByVendor();
+                    break;
+                case 2:
+                    customSearch();
+                    break;
+                case 0:
+                    System.out.println("returning to reports menu");
+                default:
+                    System.out.println("Invalid command. . . ");
+            }
 
-       } while(vendorCommand != 0);
+        } while (vendorCommand != 0);
 
 
     }
-    public static void searchByVendor(){
+
+    public static void searchByVendor() {
         DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm:ss");
         ArrayList<String> vendors = new ArrayList<>();
         for (Transaction t : transactions) {
@@ -376,25 +377,89 @@ public class Main {
             }
         }
         System.out.println("Here are our vendors. . .");
-        for(String v : vendors){
-            System.out.print(v + "|" +"\n");
+        for (String v : vendors) {
+            System.out.print(v + "|" + "\n");
         }
 
-            System.out.println("To search for vendor transactions, enter the vendor name");
-            String vendorName = inputScanner.nextLine();
+        System.out.println("To search for vendor transactions, enter the vendor name");
+        String vendorName = inputScanner.nextLine();
+
+        for (Transaction t : transactions) {
+            if (vendorName.equalsIgnoreCase(t.getVendor())) {
+                System.out.print(t.getDate() + " | " + t.getTime().format(timeFormat) + " | " + t.getDescription() + " | " + t.getVendor() + " | " + t.getAmount() + "\n");
+            }
+        }
+
+    }
+
+    public static void customSearch() {
+        try {
+
+            DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm:ss");
+            ArrayList<Transaction> filtered = new ArrayList<>();
+
+            System.out.print("Enter start date: ");
+            String startDateInput = inputScanner.nextLine();
+            boolean startDateBoolean = false;
+            if (!startDateInput.isEmpty()) startDateBoolean = true;
+
+
+            System.out.print("End Date: ");
+            String endDateInput = inputScanner.nextLine();
+            boolean endDateBoolean = false;
+            if (!endDateInput.isEmpty()) endDateBoolean = true;
+
+
+            System.out.print("Enter Description: ");
+            String description = inputScanner.nextLine();
+            boolean descriptionBoolean = false;
+            if (!description.isEmpty()) descriptionBoolean = true;
+
+            System.out.print("Enter Amount: ");
+            String userAmountInput = inputScanner.nextLine();
+            boolean amountBoolean = false;
+            if (!userAmountInput.isEmpty()) amountBoolean = true;
+
 
             for (Transaction t : transactions) {
-                if (vendorName.equalsIgnoreCase(t.getVendor())) {
-                    System.out.print(t.getDate() + " | " + t.getTime().format(timeFormat) + " | " + t.getDescription() + " | " + t.getVendor() + " | " + t.getAmount() + "\n");
+                boolean match = true;
+                if (startDateBoolean) {
+                    if (t.getDate().isBefore(LocalDate.parse(startDateInput))) {
+                        match = false;
+                    }
+                }
+                if (endDateBoolean) {
+                    if (t.getDate().isAfter(LocalDate.parse(endDateInput))) {
+                        match = false;
+                    }
+                }
+                if (descriptionBoolean) {
+                    if (!t.getDescription().equalsIgnoreCase(description)) {
+                        match = false;
+                    }
+                }
+                if (amountBoolean) {
+                    if (Double.parseDouble(userAmountInput) != t.getAmount()) {
+                        match = false;
+                    }
+                }
+                if (match) {
+                    filtered.add(t);
                 }
             }
 
+            if (filtered.isEmpty()) {
+                System.out.println("No transactions found under criteria entered. . .");
+            } else {
+                for (Transaction filter : filtered) {
+                    System.out.print(filter.getDate() + " | " + filter.getTime().format(timeFormat) + " | " + filter.getDescription() + " | " + filter.getVendor() + " | " + filter.getAmount() + "\n");
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("Invalid entry, try again");
+        }
     }
-    public static void customSearch(){
-        System.out.println("testing custom search");
-    }
-
-
-
-
 }
+
+
