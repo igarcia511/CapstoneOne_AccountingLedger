@@ -3,7 +3,7 @@
 ## Description
 This is an Accounting Ledger application that helps users track and manage their 
 transactions. This application allows users to make accurate deposits and payments as well as filtering through 
-all fo the transactions and then searching through them by matching criteria. 
+all of the transactions and then searching through them by matching criteria. 
 
 
 # Main menu screen 
@@ -14,6 +14,8 @@ The main menu screen allows you to add deposits and make payments
 
 # Ledger Menu Screen
 ![ledgerMenu](assets/ledgerMenu.png)
+
+
 
 # Reports Menu
 ![reportsMenu](assets/reportsMenu.png)
