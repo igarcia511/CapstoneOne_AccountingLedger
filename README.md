@@ -26,6 +26,7 @@ The main menu screen allows you to add deposits and make payments
 
 # Search by Vendor
 ![vendorSearch](assets/vendorsSearch.png)
+
 In this case, I first displayed all of the vendors that are in transactions and then prompted the user to search by vendor name, then if the vendor matches the users input it will display all the vendors for that search.
 
 # Interesting Piece of code
