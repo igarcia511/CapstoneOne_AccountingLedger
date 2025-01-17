@@ -1,4 +1,8 @@
+DROP DATABASE IF EXISTS Accounting_Ledger;
+
 CREATE DATABASE Accounting_Ledger;
+
+USE Accounting_Ledger;
 
 create table transactions (
     transaction_id INT NOT NULL AUTO_INCREMENT,
