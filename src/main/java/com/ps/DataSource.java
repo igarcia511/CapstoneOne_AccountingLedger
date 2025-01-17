@@ -6,12 +6,13 @@ import javax.xml.crypto.Data;
 
 public class DataSource {
 
-    public BasicDataSource getDataSource(String username, String password){
+    public BasicDataSource getDataSource(){
 
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setUrl("jdbc:mysql://localhost:3306/Accounting_Ledger");
-        dataSource.setUsername(username);
-        dataSource.setPassword(password);
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setUsername("root");
+        dataSource.setPassword("LameFish");
 
         return dataSource;
     }

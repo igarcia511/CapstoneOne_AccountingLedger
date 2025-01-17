@@ -2,10 +2,12 @@ package com.ps;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
+import javax.xml.crypto.Data;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.sql.SQLException;
 import java.sql.SQLOutput;
 import java.text.SimpleDateFormat;
 import java.time.*;
@@ -22,14 +24,15 @@ public class Main {
     static Scanner commandScanner = new Scanner(System.in);
     static Scanner inputScanner = new Scanner(System.in);
     static ArrayList<Transaction> transactions = new ArrayList<>();
-    static BasicDataSource dataSource = new BasicDataSource();
-    static TransactionDAOImpl transactionDAO = new TransactionDAOImpl(dataSource);
+     static DataSource dataSourceCreator = new DataSource();
+    static TransactionDAOImpl transactionDAO;
 
     public static void main(String[] args) {
         String userName = args[0];
         String passWord = args[1];
-        DataSource dataSource1 = new DataSource();
-        dataSource1.getDataSource(userName, passWord);
+
+        BasicDataSource dataSource = dataSourceCreator.getDataSource();
+        transactionDAO = new TransactionDAOImpl(dataSource);
 
         loadTransactions(); // <-- this will load the files as soon as the app is ran, if i dont then option 3 will be empty
 
@@ -64,31 +67,7 @@ public class Main {
     }
 
     public static void loadTransactions() {
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader("transactions.csv"));
-            String header = bufferedReader.readLine();
-            String input;
-
-            while ((input = bufferedReader.readLine()) != null) {
-
-                // LocalDate date, LocalTime time, String description, String vendor, double amount
-                String[] transactionArr = input.split("\\|");
-                LocalDate date = LocalDate.parse(transactionArr[0], dateFormatter);
-                LocalTime time = LocalTime.parse(transactionArr[1]);
-                String description = transactionArr[2];
-                String vendor = transactionArr[3];
-                double amount = Double.parseDouble(transactionArr[4]);
-
-                Transaction transaction = new Transaction(date, time, description, vendor, amount);
-
-                transactions.add(transaction);
-            }
-            bufferedReader.close();
-        } catch (Exception e) {
-
-            e.printStackTrace();
-        }
+        transactionDAO.displayAll();
     }
 
     public static void addDeposit() {

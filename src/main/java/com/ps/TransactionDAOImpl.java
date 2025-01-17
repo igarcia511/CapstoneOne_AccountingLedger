@@ -11,22 +11,25 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TransactionDAOImpl implements  TransactionDAOInt{
-  private BasicDataSource dataSource;
+public class TransactionDAOImpl implements TransactionDAOInt {
+    private BasicDataSource dataSource;
 
-   public TransactionDAOImpl(BasicDataSource dataSource){
-       this.dataSource = dataSource;
 
-   }
+
+    public TransactionDAOImpl(BasicDataSource dataSource) {
+        this.dataSource = dataSource;
+
+    }
+
     @Override
     public void addDeposit(Transaction transaction) {
-       // String query = "INSERT INTO transactions(Description, Vendor, Amount, Date, Time) VALUES(?,?,?,?,?)"
+        // String query = "INSERT INTO transactions(Description, Vendor, Amount, Date, Time) VALUES(?,?,?,?,?)"
 
     }
 
     @Override
     public void makePayment(Transaction transaction) {
-      //  String query = "INSERT INTO transactions(Description, Vendor, Amount, Date, Time) VALUES(?,?,?,?,?)
+        //  String query = "INSERT INTO transactions(Description, Vendor, Amount, Date, Time) VALUES(?,?,?,?,?)
     }
 
     @Override
@@ -35,29 +38,28 @@ public class TransactionDAOImpl implements  TransactionDAOInt{
         // add all transactions and then return this list
 
         String query = "SELECT * FROM transactions;";
-try {
-    Connection connection = dataSource.getConnection();
-    PreparedStatement preparedStatement = connection.prepareStatement(query);
+        try {
+            Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
 
-    ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-    while(resultSet.next()){
-        String description = resultSet.getString("Description");
-        String vendor = resultSet.getString("Vendor");
-        double amount = resultSet.getDouble("Amount");
-        LocalDate date = resultSet.getDate("Date").toLocalDate();
-        LocalTime time = resultSet.getTime("Time").toLocalTime();
+            while (resultSet.next()) {
+                String description = resultSet.getString("Description");
+                String vendor = resultSet.getString("Vendor");
+                double amount = resultSet.getDouble("Amount");
+                LocalDate date = resultSet.getDate("Date").toLocalDate();
+                LocalTime time = resultSet.getTime("Time").toLocalTime();
 
-        Transaction transaction = new Transaction(date, time, description, vendor, amount);
-        transactions.add(transaction);
+                Transaction transaction = new Transaction(date, time, description, vendor, amount);
+                transactions.add(transaction);
 
-    }
-return transactions;
-} catch (SQLException e){
-    e.printStackTrace();
-}
-return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
+        return transactions;
     }
 
     @Override
