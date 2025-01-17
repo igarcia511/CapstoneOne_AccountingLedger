@@ -12,7 +12,7 @@ public class DataSource {
         dataSource.setUrl("jdbc:mysql://localhost:3306/Accounting_Ledger");
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dataSource.setUsername("root");
-        dataSource.setPassword("LameFish");
+        dataSource.setPassword("yearup");
 
         return dataSource;
     }

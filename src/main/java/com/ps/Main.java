@@ -206,8 +206,9 @@ public class Main {
 
     public static void displayDeposits() {
         DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm:ss");
+        List<Transaction> deposits = transactionDAO.displayDeposits();
         System.out.println("Display Deposits. . .\n");
-        for (Transaction t : transactions) {
+        for (Transaction t : deposits) {
             if (t.getAmount() > 0) {
                 System.out.print(t.getDate() + " | " + t.getTime().format(timeFormat) + " | " + t.getDescription() + " | " + t.getVendor() + " | " + t.getAmount() + "\n");
             }
@@ -216,8 +217,9 @@ public class Main {
 
     public static void displayPayments() {
         System.out.println("Displaying Payments. . .\n");
+        List<Transaction> payments = transactionDAO.displayPayments();
         DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm:ss");
-        for (Transaction t : transactions) {
+        for (Transaction t : payments) {
             if (t.getAmount() < 0) {
                 System.out.print(t.getDate() + " | " + t.getTime().format(timeFormat) + " | " + t.getDescription() + " | " + t.getVendor() + " | " + t.getAmount() + "\n");
             }

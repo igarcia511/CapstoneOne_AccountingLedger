@@ -7,8 +7,8 @@ public interface TransactionDAOInt {
     void addDeposit(Transaction transaction);
     void makePayment(Transaction transaction);
     List<Transaction> displayAll();
-    void displayDeposits();
-    void displayPayments();
+    List<Transaction> displayDeposits();
+    List<Transaction>displayPayments();
     void displayMonthToDate();
     void displayPreviousMonth();
     void displayYearToDate();
