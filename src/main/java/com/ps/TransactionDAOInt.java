@@ -9,10 +9,10 @@ public interface TransactionDAOInt {
     List<Transaction> displayAll();
     List<Transaction> displayDeposits();
     List<Transaction>displayPayments();
-    void displayMonthToDate();
-    void displayPreviousMonth();
-    void displayYearToDate();
-    void displayPreviousYear();
-    void searchByVendor(String vendor);
-    void searchByCustomSearch();
+    List<Transaction> displayMonthToDate();
+    List<Transaction> displayPreviousMonth();
+    List<Transaction> displayYearToDate();
+    List<Transaction> displayPreviousYear();
+    List<Transaction> searchByVendor(String vendor);
+    List<Transaction> searchByCustomSearch();
 }

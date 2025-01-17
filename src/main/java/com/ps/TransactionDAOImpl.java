@@ -157,32 +157,38 @@ public class TransactionDAOImpl implements  TransactionDAOInt{
     }
 
     @Override
-    public void displayMonthToDate() {
+    public List<Transaction> displayMonthToDate() {
 
+        return null;
     }
 
     @Override
-    public void displayPreviousMonth() {
+    public List<Transaction> displayPreviousMonth() {
 
+        return null;
     }
 
     @Override
-    public void displayYearToDate() {
+    public List<Transaction> displayYearToDate() {
 
+        return null;
     }
 
     @Override
-    public void displayPreviousYear() {
+    public List<Transaction> displayPreviousYear() {
 
+        return null;
     }
 
     @Override
-    public void searchByVendor(String vendor) {
+    public List<Transaction> searchByVendor(String vendor) {
 
+        return null;
     }
 
     @Override
-    public void searchByCustomSearch() {
+    public List<Transaction> searchByCustomSearch() {
 
+        return null;
     }
 }
