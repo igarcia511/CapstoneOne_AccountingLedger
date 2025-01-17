@@ -38,6 +38,7 @@ public class TransactionDAOImpl implements TransactionDAOInt {
         // add all transactions and then return this list
 
         String query = "SELECT * FROM transactions;";
+
         try {
             Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -63,44 +64,239 @@ public class TransactionDAOImpl implements TransactionDAOInt {
     }
 
     @Override
-    public void displayDeposits() {
-        //String query = "SELECT * FROM transaction WHERE Amount > 0";
+    public List<Transaction> displayDeposits() {
+
+        List<Transaction> transactions = new ArrayList<>();
+
+        String query = "SELECT * FROM transaction WHERE Amount > 0";
+
+        try {
+            Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String description = resultSet.getString("Description");
+                String vendor = resultSet.getString("Vendor");
+                double amount = resultSet.getDouble("Amount");
+                LocalDate date = resultSet.getDate("Date").toLocalDate();
+                LocalTime time = resultSet.getTime("Time").toLocalTime();
+
+                Transaction transaction = new Transaction(date, time, description, vendor, amount);
+                transactions.add(transaction);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return transactions;
 
     }
 
     @Override
-    public void displayPayments() {
-        //String query = "SELECT * FROM WHERE Amount < 0"
+    public List<Transaction> displayPayments() {
 
+        String query = "SELECT * FROM WHERE Amount < 0";
+
+        List<Transaction> transactions = new ArrayList<>();
+
+        try {
+            Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String description = resultSet.getString("Description");
+                String vendor = resultSet.getString("Vendor");
+                double amount = resultSet.getDouble("Amount");
+                LocalDate date = resultSet.getDate("Date").toLocalDate();
+                LocalTime time = resultSet.getTime("Time").toLocalTime();
+
+                Transaction transaction = new Transaction(date, time, description, vendor, amount);
+                transactions.add(transaction);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return transactions;
     }
 
     @Override
-    public void displayMonthToDate() {
+    public List<Transaction> displayMonthToDate() {
 
+        List<Transaction> transactions = new ArrayList<>();
+
+        try {
+            Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String description = resultSet.getString("Description");
+                String vendor = resultSet.getString("Vendor");
+                double amount = resultSet.getDouble("Amount");
+                LocalDate date = resultSet.getDate("Date").toLocalDate();
+                LocalTime time = resultSet.getTime("Time").toLocalTime();
+
+                Transaction transaction = new Transaction(date, time, description, vendor, amount);
+                transactions.add(transaction);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return transactions;
     }
 
     @Override
-    public void displayPreviousMonth() {
+    public List<Transaction> displayPreviousMonth() {
 
+        List<Transaction> transactions = new ArrayList<>();
+
+        try {
+            Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String description = resultSet.getString("Description");
+                String vendor = resultSet.getString("Vendor");
+                double amount = resultSet.getDouble("Amount");
+                LocalDate date = resultSet.getDate("Date").toLocalDate();
+                LocalTime time = resultSet.getTime("Time").toLocalTime();
+
+                Transaction transaction = new Transaction(date, time, description, vendor, amount);
+                transactions.add(transaction);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return transactions;
     }
 
     @Override
-    public void displayYearToDate() {
+    public List<Transaction> displayYearToDate() {
 
+        List<Transaction> transactions = new ArrayList<>();
+
+        try {
+            Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String description = resultSet.getString("Description");
+                String vendor = resultSet.getString("Vendor");
+                double amount = resultSet.getDouble("Amount");
+                LocalDate date = resultSet.getDate("Date").toLocalDate();
+                LocalTime time = resultSet.getTime("Time").toLocalTime();
+
+                Transaction transaction = new Transaction(date, time, description, vendor, amount);
+                transactions.add(transaction);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return transactions;
     }
 
     @Override
-    public void displayPreviousYear() {
+    public List<Transaction> displayPreviousYear() {
 
+        List<Transaction> transactions = new ArrayList<>();
+
+        try {
+            Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String description = resultSet.getString("Description");
+                String vendor = resultSet.getString("Vendor");
+                double amount = resultSet.getDouble("Amount");
+                LocalDate date = resultSet.getDate("Date").toLocalDate();
+                LocalTime time = resultSet.getTime("Time").toLocalTime();
+
+                Transaction transaction = new Transaction(date, time, description, vendor, amount);
+                transactions.add(transaction);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return transactions;
     }
 
     @Override
-    public void searchByVendor(String vendor) {
+    public List<Transaction> searchByVendor(String vendor) {
 
+        List<Transaction> transactions = new ArrayList<>();
+
+        try {
+            Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String description = resultSet.getString("Description");
+                String vendor = resultSet.getString("Vendor");
+                double amount = resultSet.getDouble("Amount");
+                LocalDate date = resultSet.getDate("Date").toLocalDate();
+                LocalTime time = resultSet.getTime("Time").toLocalTime();
+
+                Transaction transaction = new Transaction(date, time, description, vendor, amount);
+                transactions.add(transaction);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return transactions;
     }
 
     @Override
-    public void searchByCustomSearch() {
+    public List<Transaction> searchByCustomSearch() {
 
+        List<Transaction> transactions = new ArrayList<>();
+
+        try {
+            Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String description = resultSet.getString("Description");
+                String vendor = resultSet.getString("Vendor");
+                double amount = resultSet.getDouble("Amount");
+                LocalDate date = resultSet.getDate("Date").toLocalDate();
+                LocalTime time = resultSet.getTime("Time").toLocalTime();
+
+                Transaction transaction = new Transaction(date, time, description, vendor, amount);
+                transactions.add(transaction);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return transactions;
     }
 }

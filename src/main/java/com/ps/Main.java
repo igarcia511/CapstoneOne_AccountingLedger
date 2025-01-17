@@ -24,7 +24,7 @@ public class Main {
     static Scanner commandScanner = new Scanner(System.in);
     static Scanner inputScanner = new Scanner(System.in);
     static ArrayList<Transaction> transactions = new ArrayList<>();
-     static DataSource dataSourceCreator = new DataSource();
+    static DataSource dataSourceCreator = new DataSource();
     static TransactionDAOImpl transactionDAO;
 
     public static void main(String[] args) {
