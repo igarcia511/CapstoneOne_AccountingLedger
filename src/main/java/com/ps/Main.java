@@ -1,5 +1,7 @@
 package com.ps;
 
+import org.apache.commons.dbcp2.BasicDataSource;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -10,16 +12,25 @@ import java.time.*;
 import java.time.chrono.ChronoLocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Main {
 
+
     static Scanner commandScanner = new Scanner(System.in);
     static Scanner inputScanner = new Scanner(System.in);
     static ArrayList<Transaction> transactions = new ArrayList<>();
+    static BasicDataSource dataSource = new BasicDataSource();
+    static TransactionDAOImpl transactionDAO = new TransactionDAOImpl(dataSource);
 
     public static void main(String[] args) {
+        String userName = args[0];
+        String passWord = args[1];
+        DataSource dataSource1 = new DataSource();
+        dataSource1.getDataSource(userName, passWord);
+
         loadTransactions(); // <-- this will load the files as soon as the app is ran, if i dont then option 3 will be empty
 
         int mainMenuCommand;
@@ -203,10 +214,12 @@ public class Main {
 
     public static void displayAll() {
         // need to display newest entries first To Do
-        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm:ss");
-        for (int i = 0; i < transactions.size(); i++) {
 
-            Transaction t = transactions.get(i);
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm:ss");
+        List<Transaction> allTransactions = transactionDAO.displayAll();
+        for (int i = 0; i < allTransactions.size(); i++) {
+
+            Transaction t = allTransactions.get(i);
             System.out.print(t.getDate() + " | " + t.getTime().format(timeFormat) + " | " + t.getDescription() + " | " + t.getVendor() + " | " + t.getAmount() + "\n");
         }
         System.out.println("\n");
