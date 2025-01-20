@@ -8,18 +8,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Userinterface {
-    static final Scanner keyboard = new Scanner(System.in);
+public class UserInterface {
 
-    static Scanner commandScanner = new Scanner(System.in);
-    static Scanner inputScanner = new Scanner(System.in);
+    static Scanner keyboard = new Scanner(System.in);
     static ArrayList<Transaction> transactions = new ArrayList<>();
-
-    public static void main(String[] args) {
-       // String username = args[[0];
-        //String password = args[1];
-        display();
-    }
 
     public static void display(){
 
@@ -30,12 +22,12 @@ public class Userinterface {
                 ("3) to Display Ledger")
                 ("4) to search by vendor");
                 ("5) for custom search");
-                ("6) to return to reports menu")
+                ("6) Reports menu")
                 ("0) to exit application")
                 Please enter your selection:""");
 
         do {
-            mainMenuCommand = Integer.parseInt(commandScanner.nextLine());
+            mainMenuCommand = Integer.parseInt(keyboard.nextLine());
 
             switch (mainMenuCommand) {
                 case 1:
@@ -54,7 +46,8 @@ public class Userinterface {
                     customSearch();
                     break;
                 case 6:
-                    System.out.println("returning to reports menu");
+                    reportsMenu();
+                    break;
                 case 0:
                     System.out.println("Exiting the application. . .");
                     System.exit(0);
@@ -74,24 +67,24 @@ public class Userinterface {
 
             // prompt user for date
             System.out.print("Enter the date of the payment in yyyy-mm-dd format(include leading zeros): ");
-            String paymentDate = inputScanner.nextLine();
+            String paymentDate = keyboard.nextLine();
             LocalDate date = LocalDate.parse(paymentDate, dateFormatter);
 
             // prompt user for time of payment
             System.out.print("Enter the time of the payments in hh:mm:ss format(include leading zeros): ");
-            String timeOfPayment = inputScanner.nextLine();
+            String timeOfPayment = keyboard.nextLine();
             LocalTime time = LocalTime.parse(timeOfPayment);
 
             // promt user for transaction description
             System.out.print("Enter the description of transaction: ");
-            String description = inputScanner.nextLine();
+            String description = keyboard.nextLine();
 
             System.out.print("Enter the name of the vendor: ");
-            String vendorName = inputScanner.nextLine();
+            String vendorName = keyboard.nextLine();
 
             System.out.print("Enter the amount of the transaction:$");
-            double transactionAmount = inputScanner.nextDouble();
-            inputScanner.nextLine();
+            double transactionAmount = keyboard.nextDouble();
+            keyboard.nextLine();
             Transaction transaction = new Transaction(date, time, description, vendorName, transactionAmount);
             transactions.add(transaction);
 
@@ -116,25 +109,25 @@ public class Userinterface {
 
             // prompt user for date
             System.out.print("Enter the date of the payment in yyyy-mm-dd format(include leading zeros): ");
-            String paymentDate = inputScanner.nextLine();
+            String paymentDate = keyboard.nextLine();
             LocalDate date = LocalDate.parse(paymentDate, dateFormatter);
 
             // prompt user for time of payment
             System.out.print("Enter the time of the payments in hh:mm:ss format(include leading zeros): ");
-            String timeOfPayment = inputScanner.nextLine();
+            String timeOfPayment = keyboard.nextLine();
             LocalTime time = LocalTime.parse(timeOfPayment);
 
             // promt user for transaction description
             System.out.println("Enter the description of transaction: ");
-            String description = inputScanner.nextLine();
+            String description = keyboard.nextLine();
 
             System.out.print("Enter the name of the vendor: ");
-            String vendorName = inputScanner.nextLine();
+            String vendorName = keyboard.nextLine();
 
             System.out.print("Enter the amount of the transaction:$");
-            double transactionAmount = inputScanner.nextDouble();
+            double transactionAmount = keyboard.nextDouble();
             double amount = -transactionAmount; // turning the amount negative
-            inputScanner.nextLine();
+            keyboard.nextLine();
             Transaction transaction = new Transaction(date, time, description, vendorName, amount);
             transactions.add(transaction);
 
@@ -162,7 +155,7 @@ public class Userinterface {
             System.out.println("0) to return to main menu");
 
             System.out.print("Command: ");
-            subMenuCommand = commandScanner.nextInt();
+            subMenuCommand = keyboard.nextInt();
 
             switch (subMenuCommand) {
                 case 1:
@@ -230,7 +223,7 @@ public class Userinterface {
             System.out.println("0) to exit to ledger menu. . .");
 
             System.out.print("Command: ");
-            reportsMenuCommand = commandScanner.nextInt();
+            reportsMenuCommand = Integer.parseInt(keyboard.nextLine());
 
             switch (reportsMenuCommand) {
                 case 1:
@@ -333,7 +326,7 @@ public class Userinterface {
             System.out.println("0) to return to reports menu");
 
             System.out.print("command:");
-            vendorCommand = commandScanner.nextInt();
+            vendorCommand = keyboard.nextInt();
 
             switch (vendorCommand) {
                 case 1:
@@ -367,7 +360,7 @@ public class Userinterface {
         }
 
         System.out.println("To search for vendor transactions, enter the vendor name");
-        String vendorName = inputScanner.nextLine();
+        String vendorName = keyboard.nextLine();
 
         for (Transaction t : transactions) {
             if (vendorName.equalsIgnoreCase(t.getVendor())) {
@@ -384,24 +377,24 @@ public class Userinterface {
             ArrayList<Transaction> filtered = new ArrayList<>();
 
             System.out.print("Enter start date: ");
-            String startDateInput = inputScanner.nextLine();
+            String startDateInput = keyboard.nextLine();
             boolean startDateBoolean = false;
             if (!startDateInput.isEmpty()) startDateBoolean = true;
 
 
             System.out.print("End Date: ");
-            String endDateInput = inputScanner.nextLine();
+            String endDateInput = keyboard.nextLine();
             boolean endDateBoolean = false;
             if (!endDateInput.isEmpty()) endDateBoolean = true;
 
 
             System.out.print("Enter Description: ");
-            String description = inputScanner.nextLine();
+            String description = keyboard.nextLine();
             boolean descriptionBoolean = false;
             if (!description.isEmpty()) descriptionBoolean = true;
 
             System.out.print("Enter Amount: ");
-            String userAmountInput = inputScanner.nextLine();
+            String userAmountInput = keyboard.nextLine();
             boolean amountBoolean = false;
             if (!userAmountInput.isEmpty()) amountBoolean = true;
 
